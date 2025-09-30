@@ -22,7 +22,7 @@ public class InputManager
     {
         get
         {
-            return Input.GetButton("Fire1");
+            return Input.GetKeyDown(KeyCode.Space);
         }
     }
 }

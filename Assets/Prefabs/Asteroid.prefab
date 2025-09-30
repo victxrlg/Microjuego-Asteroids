@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.8844, y: 1.597, z: 0}
-  m_LocalScale: {x: 0.33016446, y: 0.22601424, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Asteroid
   speed: 6
+  points: 0
+  canSplit: 1
+  smallerAsteroidPrefab: {fileID: 9012357656136614972, guid: 6cefe945cecbdc64db18f5970763fd2f, type: 3}
+  splitAngle: 45
 --- !u!114 &4847999848736785698
 MonoBehaviour:
   m_ObjectHideFlags: 0
