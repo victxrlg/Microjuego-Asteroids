@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -48,24 +49,29 @@ public class Player : MonoBehaviour
         transform.Rotate(0, 0, -angularSpeed * horizontal * Time.deltaTime);
     }
     private void Shoot()
-{
-    if (shooting && canShoot)
     {
-        StartCoroutine(FireRate());
+        if (shooting && canShoot)
+        {
+            StartCoroutine(FireRate());
+        }
     }
-}
 
-private IEnumerator FireRate()
-{
-    canShoot = false;
-    var pos = transform.right * offsetBullet + transform.position;
-    var bullet = Instantiate(bulletPrefab, pos, transform.rotation);
-    Destroy(bullet, 5);
+    private IEnumerator FireRate()
+    {
+        canShoot = false;
+        var pos = transform.right * offsetBullet + transform.position;
+        var bullet = Instantiate(bulletPrefab, pos, transform.rotation);
+        Destroy(bullet, 5);
 
-    yield return new WaitForSeconds(shootRate);
+        yield return new WaitForSeconds(shootRate);
 
-    canShoot = true;
-}
+        canShoot = true;
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Asteroid"))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }
 
 
