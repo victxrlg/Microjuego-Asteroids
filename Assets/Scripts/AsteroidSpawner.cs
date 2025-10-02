@@ -27,11 +27,13 @@ public class AsteroidSpawner : MonoBehaviour
             {
                 Transform selectedSpawner = spawners[Random.Range(0, spawners.Length)];
                                 
-                Instantiate(
-                    asteroidPrefab,
-                    selectedSpawner.position,
-                    Quaternion.identity
-                );
+                GameObject asteroid = PoolManager.Instance.GetAsteroid();
+                if (asteroid != null)
+                {
+                    asteroid.transform.position = selectedSpawner.position;
+                    asteroid.transform.rotation = Quaternion.identity;
+                    asteroid.SetActive(true); 
+                }
             }
             
             yield return new WaitForSeconds(timeToSpawn);

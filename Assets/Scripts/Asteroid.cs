@@ -5,12 +5,11 @@ public class Asteroid : MonoBehaviour
     private Rigidbody2D rb;
     public float speed;
     public int points;
-    [Header("Split Settings")]
     public bool canSplit;
     public GameObject smallerAsteroidPrefab;
     public float splitAngle = 45f;
 
-    void Start()
+    void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.linearDamping = 0;
@@ -31,8 +30,8 @@ public class Asteroid : MonoBehaviour
             if (canSplit && smallerAsteroidPrefab != null)
                 SplitAsteroid(other.transform);
 
-            Destroy(gameObject);
-            Destroy(other.gameObject);
+            gameObject.SetActive(false);
+            other.gameObject.SetActive(false);
         }
     }
     void SplitAsteroid(Transform bullet)
@@ -52,14 +51,18 @@ public class Asteroid : MonoBehaviour
     
     void CreateSmallAsteroid(Vector2 direction)
     {
-        GameObject smallAsteroid = Instantiate(smallerAsteroidPrefab, transform.position, Quaternion.identity);
-        
-        Rigidbody2D smallRb = smallAsteroid.GetComponent<Rigidbody2D>();
-        if (smallRb != null)
+        GameObject smallAsteroid = PoolManager.Instance.GetSmallAsteroid();
+        if (smallAsteroid != null)
         {
-            smallRb.linearVelocity = direction * speed * 0.8f; 
-            smallRb.angularVelocity = Random.Range(-50f, 50f);
+            Rigidbody2D smallRb = smallAsteroid.GetComponent<Rigidbody2D>();
+            if (smallRb != null)
+            {
+                smallRb.linearVelocity = direction * speed * 0.8f; 
+                smallRb.angularVelocity = Random.Range(-50f, 50f);
+            }
         }
+        
+        
     }
     
     Vector2 RotateVector(Vector2 v, float degrees)
